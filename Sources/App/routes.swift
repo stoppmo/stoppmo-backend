@@ -3,12 +3,9 @@ import Vapor
 
 func routes(_ app: Application) throws {
     app.get { req async throws in
-        try await req.view.render("index", ["title": "Hello Vapor!"])
+        app.logger.info(Logger.Message(stringLiteral: "Hello, world!"))
+        return "Hello, Vapor|"
     }
 
-    app.get("hello") { req async -> String in
-        "Hello, world!"
-    }
-
-    try app.register(collection: TodoController())
+    // try app.register(collection: StreakController())
 }
