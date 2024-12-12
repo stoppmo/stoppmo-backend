@@ -7,21 +7,20 @@ import Vapor
 // configures your application
 public func configure(_ app: Application) async throws {
     // uncomment to serve files from /Public folder
-    // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
+    app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
-    app.databases.use(DatabaseConfigurationFactory.postgres(configuration: .init(
-        hostname: Environment.get("DATABASE_HOST") ?? "localhost",
-        port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? SQLPostgresConfiguration.ianaPortNumber,
-        username: Environment.get("DATABASE_USERNAME") ?? "vapor_username",
-        password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
-        database: Environment.get("DATABASE_NAME") ?? "vapor_database",
-        tls: .prefer(try .init(configuration: .clientDefault)))
-    ), as: .psql)
+    // Have the production connection string in ".env.production" and the development database connection
+    // string in ".env.development".
+    let databaseConnectionString = Environment.get("DATABASE_CONNECTION_STRING") ?? "conn_string_not_found"
+    app.logger.info("Database connection string: \(databaseConnectionString)")
+    try app.databases.use(
+        .postgres(url: databaseConnectionString),
+        as: .psql
+    )
 
     app.migrations.add(CreateTodo())
-
+    app.migrations.add(CreateUser())
     app.views.use(.leaf)
-
 
     // register routes
     try routes(app)
