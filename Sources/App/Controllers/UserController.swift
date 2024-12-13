@@ -29,7 +29,6 @@ struct UserController: RouteCollection {
         guard let id = req.parameters.get("id", as: UUID.self) else {
             throw Abort(.badRequest)
         }
-        print("id: \(id)")
         let user = User.find(id, on: req.db).unwrap(or: Abort(.notFound))
         return user
     }
