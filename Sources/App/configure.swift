@@ -21,6 +21,7 @@ public func configure(_ app: Application) async throws {
     // Add all migrations to database
     app.migrations.add(CreateUser())
     app.migrations.add(CreateBadge())
+    app.migrations.add(CreateUserBadge())
 
     app.views.use(.leaf)
 

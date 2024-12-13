@@ -6,8 +6,9 @@ struct CreateBadge: AsyncMigration {
             .id()
             .field("title", .string, .required)
             .field("description", .string, .required)
-            .field("imageURL", .string, .required)
-            .field("unlockStreakDay", .int, .required)
+            .field("image_url", .string, .required)
+            .field("unlock_streak_day", .int, .required)
+            // .field("user_id", .uuid, .references("users", "id"))
             .create()
     }
 

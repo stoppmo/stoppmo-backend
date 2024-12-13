@@ -41,6 +41,11 @@ final class User: Model, Content, @unchecked Sendable {
     @Field(key: "updated_at")
     var updatedAt: Date?
 
+    // this doesn't add claimed_badges_history as a column on the users table.
+    // it just allows you to query the badges of a user when having access to the user object really easily.
+    @Children(for: \.$user)
+    var claimed_badges_history: [UserBadge]
+
     init() { }
 
     init(
