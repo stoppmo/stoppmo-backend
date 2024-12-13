@@ -18,8 +18,10 @@ public func configure(_ app: Application) async throws {
         as: .psql
     )
 
-    app.migrations.add(CreateTodo())
+    // Add all migrations to database
     app.migrations.add(CreateUser())
+    app.migrations.add(CreateBadge())
+
     app.views.use(.leaf)
 
     // register routes

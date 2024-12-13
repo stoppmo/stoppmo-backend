@@ -7,5 +7,5 @@ func routes(_ app: Application) throws {
         return "Hello, Vapor|"
     }
 
-    // try app.register(collection: StreakController())
+    try app.register(collection: UserController())
 }
